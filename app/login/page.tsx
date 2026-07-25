@@ -1,0 +1,5 @@
+import { login } from './actions'
+export default async function Login({ searchParams }: { searchParams: Promise<{error?:string}> }) {
+ const { error } = await searchParams
+ return <main className="min-h-screen grid place-items-center bg-ivory p-6"><form action={login} className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-luxury"><h1 className="text-4xl">Administración</h1><p className="mt-2 text-black/55">Acceso exclusivo para personal autorizado.</p>{error&&<p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}<label className="mt-6 block text-sm">Correo</label><input name="email" type="email" required className="mt-2 w-full rounded-xl border p-3"/><label className="mt-4 block text-sm">Contraseña</label><input name="password" type="password" required className="mt-2 w-full rounded-xl border p-3"/><button className="mt-6 w-full rounded-full bg-ink p-4 text-white">Ingresar</button><a className="mt-5 block text-center text-sm underline" href="/recuperar">Olvidé mi contraseña</a></form></main>
+}

@@ -1,0 +1,2 @@
+import { reset } from './actions'
+export default function Page(){return <main className="min-h-screen grid place-items-center p-6"><form action={reset} className="w-full max-w-md rounded-3xl bg-white p-8 shadow-luxury"><h1 className="text-3xl">Recuperar acceso</h1><p className="mt-3 text-black/60">Recibirás un enlace seguro en tu correo.</p><input name="email" type="email" required placeholder="correo@ejemplo.com" className="mt-6 w-full rounded-xl border p-3"/><button className="mt-4 w-full rounded-full bg-ink p-4 text-white">Enviar enlace</button></form></main>}
