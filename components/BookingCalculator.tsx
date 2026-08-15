@@ -6,7 +6,7 @@ import { formatCop, formatUsd } from "@/lib/currency";
 type Props = { property: "santa-marina" | "villa-ernesta" };
 
 export function BookingCalculator({ property }: Props) {
-  const [guests, setGuests] = useState(property === "santa-marina" ? 2 : 6);
+  const [guests, setGuests] = useState(2);
   const [nights, setNights] = useState(1);
   const [mode, setMode] = useState<"stay" | "day">("stay");
   const [season, setSeason] = useState<"low" | "weekend" | "high">("low");
@@ -26,16 +26,19 @@ export function BookingCalculator({ property }: Props) {
     return () => { active = false; };
   }, []);
 
+  // Misma fórmula que getFormulaPrice() en lib/booking/pricing.ts (y que
+  // calculate_stay_price() en Supabase, que es la que realmente cobra la
+  // reserva): base para 2 huéspedes + recargo por cada huésped adicional.
   const total = useMemo(() => {
+    const extraGuests = Math.max(0, guests - 2);
     if (property === "santa-marina") {
-      const rate = season === "low" ? 240000 : season === "weekend" ? 320000 : 450000;
-      return rate * nights;
+      const base = season === "high" ? 450000 : season === "weekend" ? 320000 : 200000;
+      return (base + extraGuests * 20000) * nights;
     }
-    const tier = guests <= 6 ? 0 : guests <= 12 ? 1 : 2;
-    const dayRates = [300000, 380000, 480000];
-    const stayRates = [380000, 480000, 580000];
-    let amount = (mode === "day" ? dayRates[tier] : stayRates[tier]) * nights;
-    if (mode === "stay" && nights >= 3) amount -= stayRates[tier] * 0.5;
+    const dayRate = 200000 + extraGuests * 20000;
+    const stayRate = 300000 + extraGuests * 25000;
+    let amount = (mode === "day" ? dayRate : stayRate) * nights;
+    if (mode === "stay" && nights >= 3) amount -= stayRate * 0.5;
     return amount;
   }, [property, guests, nights, mode, season]);
 
@@ -63,7 +66,7 @@ export function BookingCalculator({ property }: Props) {
           </label>
         )}
         <label className="grid gap-2 text-sm">Huéspedes
-          <input type="number" min="1" max={property === "santa-marina" ? 4 : 20} value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="rounded-xl border border-black/15 p-3" />
+          <input type="number" min="1" max={property === "santa-marina" ? 3 : 20} value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="rounded-xl border border-black/15 p-3" />
         </label>
         <label className="grid gap-2 text-sm">{mode === "day" ? "Días" : "Noches"}
           <input type="number" min="1" value={nights} onChange={(e) => setNights(Number(e.target.value))} className="rounded-xl border border-black/15 p-3" />

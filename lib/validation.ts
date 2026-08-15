@@ -15,3 +15,13 @@ export const bookingSchema = z.object({
   paymentOption: z.enum(['full','deposit']).default('deposit'),
   acceptedTerms: z.literal(true),
 }).refine(v => new Date(v.checkOut) > new Date(v.checkIn), { message: 'La salida debe ser posterior a la entrada', path: ['checkOut'] })
+
+// Usados por /mi-reserva: el huésped se identifica con el código de su
+// reserva + el correo con el que reservó (mismos dos datos que ya tiene en
+// su correo/WhatsApp de confirmación). No se expone nada por RLS pública:
+// la verificación ocurre en el servidor antes de responder.
+export const bookingLookupSchema = z.object({
+  code: z.string().trim().min(3).max(60),
+  email: z.string().trim().email(),
+})
+export const bookingCancelSchema = bookingLookupSchema

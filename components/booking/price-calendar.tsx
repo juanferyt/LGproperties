@@ -5,7 +5,7 @@ import { CalendarDay, type CalendarDayState } from "./calendar-day";
 import { CalendarSummary } from "./calendar-summary";
 import { DAY_LABELS_ES, getMonthGrid, monthLabelEs, nightsBetween, nightsList, toISODate, todayISO } from "@/lib/booking/date-utils";
 
-type ApiDay = { date: string; amount: number | null; tier: "low" | "mid" | "high" | null; season: "low" | "weekend" | "high" | null; unavailable: boolean; isPast: boolean };
+type ApiDay = { date: string; amount: number | null; season: "low" | "weekend" | "high" | null; unavailable: boolean; isPast: boolean };
 type ApiResponse = {
   property: { id: string; slug: string; name: string };
   months: { year: number; month: number }[];
@@ -172,9 +172,10 @@ export function PriceCalendar({ propertyId, propertySlug, modality, guests, chec
       </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-black/60">
-        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#DCEFDD]" /> $ tarifa baja</span>
-        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#FBEFC7]" /> $$ tarifa media</span>
-        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#FBDCD4]" /> $$$ tarifa alta</span>
+        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#DCEFDD]" /> Temporada baja</span>
+        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#FBE3C2]" /> Fin de semana</span>
+        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-[#FBD4D4]" /> Temporada alta</span>
+        <span className="flex items-center gap-2"><span className="h-3.5 w-3.5 rounded-full bg-black/10" /> Ocupado</span>
       </div>
 
       <div className="mt-5 flex items-center justify-between">
@@ -232,7 +233,6 @@ export function PriceCalendar({ propertyId, propertySlug, modality, guests, chec
                       isPast: apiDay?.isPast ?? iso < today,
                       isToday: iso === today,
                       unavailable: apiDay?.unavailable ?? false,
-                      tier: apiDay?.tier ?? null,
                       season: apiDay?.season ?? null,
                       amount: apiDay?.amount ?? null,
                       isCheckIn,

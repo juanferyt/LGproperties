@@ -1,3 +1,8 @@
+-- NOTA (2026-08-14): este contenido ya está incluido en supabase/schema.sql.
+-- Si vas a crear un proyecto de Supabase NUEVO, solo corre schema.sql — no
+-- hace falta correr este archivo también. Se conserva como historial para
+-- proyectos que ya existían con la versión anterior de schema.sql.
+--
 -- Migración: soporte para el calendario de precios y disponibilidad.
 -- No destructiva: solo agrega índices para acelerar las nuevas consultas
 -- que hace /api/booking-calendar (rangos de fechas por propiedad).

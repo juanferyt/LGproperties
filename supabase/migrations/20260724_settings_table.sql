@@ -1,3 +1,8 @@
+-- NOTA (2026-08-14): este contenido ya está incluido en supabase/schema.sql.
+-- Si vas a crear un proyecto de Supabase NUEVO, solo corre schema.sql — no
+-- hace falta correr este archivo también. Se conserva como historial para
+-- proyectos que ya existían con la versión anterior de schema.sql.
+--
 -- Migración: tabla `settings` (clave/valor) que ya usaban:
 --   - app/api/settings/route.ts
 --   - app/admin/actions.ts (updateUsdRate)

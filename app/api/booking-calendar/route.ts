@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { fetchUnavailableDates } from "@/lib/booking/availability";
-import { resolveRateForDate, buildTierThresholds, classifyTier, type RateRow } from "@/lib/booking/pricing";
-import { getMonthGrid, toISODate, todayISO } from "@/lib/booking/date-utils";
+import { getFormulaPrice, getSeasonForDate, type Modality } from "@/lib/booking/pricing";
+import { getMonthGrid, parseISODate, toISODate, todayISO } from "@/lib/booking/date-utils";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Devuelve, para una propiedad y un rango de meses, el precio y nivel de
- * tarifa ($ / $$ / $$$) de cada día junto con las fechas no disponibles
- * (reservas activas + bloqueos). Todo se calcula con datos reales de
- * Supabase: nunca se inventan precios ni disponibilidad.
+ * Devuelve, para una propiedad y un rango de meses, el precio y la temporada
+ * de cada día junto con las fechas no disponibles (reservas activas +
+ * bloqueos). El precio se calcula con la misma fórmula que cobra la reserva
+ * real (`getFormulaPrice`, que refleja la función SQL `calculate_stay_price`):
+ * nunca se inventan precios ni disponibilidad.
  *
  * Query params:
  *  - propertyId (uuid, requerido)
@@ -22,7 +23,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   const propertyId = req.nextUrl.searchParams.get("propertyId");
   const modalityParam = req.nextUrl.searchParams.get("modality");
-  const modality = modalityParam === "day_pass" ? "day_pass" : "accommodation";
+  const modality: Modality = modalityParam === "day_pass" ? "day_pass" : "accommodation";
   const guests = Math.max(1, Number(req.nextUrl.searchParams.get("guests") || 1));
   const monthsToShow = Math.min(3, Math.max(1, Number(req.nextUrl.searchParams.get("months") || 2)));
 
@@ -47,14 +48,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Propiedad no encontrada" }, { status: 404 });
     }
 
-    const { data: ratesData, error: ratesError } = await db
-      .from("rates")
-      .select("id,property_id,modality,min_guests,max_guests,amount,start_date,end_date,weekend_only,active")
-      .eq("property_id", propertyId)
-      .eq("active", true);
-    if (ratesError) throw new Error(ratesError.message);
-    const rates = (ratesData ?? []) as RateRow[];
-
     // Construimos la grilla de días visibles para los `monthsToShow` meses,
     // incluyendo el relleno de semanas vecinas para no dejar huecos.
     const monthsGrid = Array.from({ length: monthsToShow }, (_, i) => {
@@ -70,19 +63,18 @@ export async function GET(req: NextRequest) {
 
     const unavailable = await fetchUnavailableDates(db, propertyId, fromISO, toISO);
 
-    // Los niveles $/$$/$$$ dependen de las tarifas REALES configuradas para
-    // esta propiedad (terciles de los montos activos), nunca de una
-    // temporada inventada en el código.
-    const thresholds = buildTierThresholds(rates.filter((r) => r.modality === modality));
+    // Si la combinación propiedad/modalidad no existe (ej. pasadía en Santa
+    // Marina) la fórmula devuelve null para cualquier fecha: se usa para el
+    // aviso "sin tarifa configurada" en vez de la antigua tabla `rates`.
+    const hasAnyRate = getFormulaPrice(property.slug, modality, guests, fromISO) !== null;
 
     const days = allDates.map((date) => {
-      const resolved = resolveRateForDate(rates, date, modality, guests);
-      const amount = resolved.amount;
+      const amount = getFormulaPrice(property.slug, modality, guests, date);
+      const season = getSeasonForDate(parseISODate(date));
       return {
         date,
         amount,
-        season: resolved.season,
-        tier: amount !== null ? classifyTier(amount, thresholds) : null,
+        season,
         unavailable: unavailable.dates.has(date),
         isPast: date < todayISO(),
       };
@@ -92,7 +84,7 @@ export async function GET(req: NextRequest) {
       property: { id: property.id, slug: property.slug, name: property.name },
       months: monthsGrid.map((m) => ({ year: m.year, month: m.month0 + 1 })),
       days,
-      hasAnyRate: rates.some((r) => r.modality === modality),
+      hasAnyRate,
     });
   } catch (error: any) {
     console.error("[booking-calendar] error:", error);
