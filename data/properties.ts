@@ -17,7 +17,7 @@ export const properties: Property[] = [
     slug: "santa-marina", name: "Santa Marina", location: "Santa Marta, Colombia",
     tagline: "Despierta frente al Caribe.",
     description: "Apartamento tipo estudio para máximo 3 huéspedes, con balcón, vista al mar, piscinas y acceso a playa privada.",
-    capacity: "Máximo 3 huéspedes", priceFrom: "$200.000 COP / noche", accent: "ocean",
+    capacity: "Máximo 3 huéspedes", priceFrom: "Desde $200.000 COP / noche", accent: "ocean",
     cover: "/media/santa-marina/DDDFF2E0-1366-46F1-B822-163B74EA1FF5.jpeg", video: "/media/santa-marina/tour.mp4",
     gallery: [
       "/media/santa-marina/7A90CD73-1715-4564-9346-C8D448011DF0.jpeg",
@@ -109,7 +109,7 @@ export const properties: Property[] = [
     slug: "villa-ernesta", name: "Villa Ernesta", location: "Yuto, Chocó, Colombia",
     tagline: "Reconecta con la naturaleza.",
     description: "Casa campestre con 4 habitaciones, 6 baños, zona social, bar, piscina infantil tipo jacuzzi y la quebrada Doña Josefa a unos 10 metros.",
-    capacity: "Hasta 20 huéspedes", priceFrom: "$200.000 COP / pasadía", accent: "forest",
+    capacity: "Hasta 20 huéspedes", priceFrom: "Desde $200.000 COP / pasadía", accent: "forest",
     cover: "/media/villa-ernesta/cover.jpg", video: "/media/villa-ernesta/tour.mp4",
     gallery: [
       "/media/villa-ernesta/frame-1.jpg",
