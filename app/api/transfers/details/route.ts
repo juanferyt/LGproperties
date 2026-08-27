@@ -7,6 +7,6 @@ export async function GET() {
     bankAccountNumber: process.env.BANK_ACCOUNT_NUMBER || 'No configurado',
     bankAccountHolder: process.env.BANK_ACCOUNT_HOLDER || 'No configurado',
     bankAccountDocument: process.env.BANK_ACCOUNT_DOCUMENT || 'No configurado',
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573122823625',
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573113035593',
   })
 }

@@ -119,6 +119,53 @@ export const properties: Property[] = [
       "/media/villa-ernesta/frame-5.jpg",
       "/media/villa-ernesta/frame-6.jpg"
     ],
-    amenities: ["4 habitaciones", "6 baños", "Sala y comedor", "Cocina", "Zona social", "Bar", "Piscina infantil tipo jacuzzi", "Hamacas", "Columpios", "Quebrada cercana"]
+    amenities: ["4 habitaciones", "6 baños", "Sala y comedor", "Cocina", "Zona social", "Bar", "Piscina infantil tipo jacuzzi", "Hamacas", "Columpios", "Quebrada cercana"],
+    rules: {
+      title: "Recomendaciones para los visitantes de la finca Villa Ernesta",
+      sections: [
+        {
+          heading: "Privacidad y servicio",
+          items: [
+            "Villa Ernesta es un sitio privado, por lo que solo estarán ustedes y sus acompañantes durante la estadía.",
+            "La atención es de autoservicio. Si lo consideran necesario, recomendamos llevar a alguien que pueda apoyar en la cocina o en la organización."
+          ]
+        },
+        {
+          heading: "Sonido y entretenimiento",
+          items: [
+            "La finca cuenta con sistema de sonido, pero depende de la conexión eléctrica, que en ocasiones puede ser inestable en Yuto.",
+            "Recomendamos llevar un sistema de sonido inalámbrico o memorias USB con su música favorita, ya que el servicio de internet puede presentar intermitencias."
+          ]
+        },
+        {
+          heading: "Utensilios y elementos básicos",
+          items: [
+            "No olviden llevar elementos desechables como platos, vasos, cubiertos, servilletas y recipientes para servir y preparar los alimentos.",
+            "Si planean hacer asados, recuerden llevar carbón o brasas, ya que la finca solo cuenta con la parrilla."
+          ]
+        },
+        {
+          heading: "Ropa de cama y toallas",
+          items: ["Las camas estarán listas con sábanas y cobijas. Si lo prefieren, pueden llevar sus propias cobijas y toallas."]
+        },
+        {
+          heading: "Uso de gas o leña",
+          items: ["En caso de requerir gas o leña, el servicio tiene un costo adicional de $30.000 COP."]
+        },
+        {
+          heading: "Depósito de seguridad",
+          items: ["Es necesario dejar un depósito de seguridad de $200.000 COP, que será reembolsado al finalizar la estadía, siempre que se verifique que no haya daños en las instalaciones."]
+        },
+        {
+          heading: "Reservas y pagos",
+          items: [
+            "Para separar la fecha, es necesario realizar un depósito del 50 % del valor total.",
+            "El saldo pendiente y el depósito de seguridad deben pagarse dos días antes del ingreso.",
+            "Una vez realizado el pago para el ingreso a Villa Ernesta, si por cualquier motivo se desiste de la reserva, se aplicará una penalidad del 25 % sobre el valor pagado."
+          ]
+        }
+      ],
+      note: "Gracias por su atención y por elegir la finca Villa Ernesta. ¡Disfruten de su estadía en este espacio tranquilo y privado!"
+    }
   }
 ];

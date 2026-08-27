@@ -141,7 +141,7 @@ export function MyBookingLookup() {
               </button>
               <p className="mt-3 text-xs text-black/45">
                 Esto libera tus fechas de inmediato. Si ya realizaste un pago, la devolución no es automática — escríbenos por{" "}
-                <a className="underline" href="https://wa.me/573122823625">WhatsApp</a> para coordinarla.
+                <a className="underline" href="https://wa.me/573113035593">WhatsApp</a> para coordinarla.
               </p>
             </div>
           ) : (

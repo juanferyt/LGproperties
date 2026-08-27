@@ -78,7 +78,7 @@ export function BookingCalculator({ property }: Props) {
         <p className="mt-1 text-lg text-black/70">{formatUsd(usdAmount)} USD</p>
         <p className="mt-2 text-xs text-black/45">Sujeto a disponibilidad, temporada, actividad y requerimientos adicionales.</p>
       </div>
-      <a href={`https://wa.me/573122823625?text=${message}`} className="mt-6 block rounded-full bg-gold px-6 py-4 text-center font-semibold text-white">Solicitar reserva por WhatsApp</a>
+      <a href={`https://wa.me/573113035593?text=${message}`} className="mt-6 block rounded-full bg-gold px-6 py-4 text-center font-semibold text-white">Solicitar reserva por WhatsApp</a>
     </div>
   );
 }
