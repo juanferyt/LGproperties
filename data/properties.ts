@@ -117,7 +117,9 @@ export const properties: Property[] = [
       "/media/villa-ernesta/frame-3.jpg",
       "/media/villa-ernesta/frame-4.jpg",
       "/media/villa-ernesta/frame-5.jpg",
-      "/media/villa-ernesta/frame-6.jpg"
+      "/media/villa-ernesta/frame-6.jpg",
+      "/media/villa-ernesta/sala-social.jpeg",
+      "/media/villa-ernesta/bar-zona-social.jpeg"
     ],
     amenities: ["4 habitaciones", "6 baños", "Sala y comedor", "Cocina", "Zona social", "Bar", "Piscina infantil tipo jacuzzi", "Hamacas", "Columpios", "Quebrada cercana"],
     rules: {
